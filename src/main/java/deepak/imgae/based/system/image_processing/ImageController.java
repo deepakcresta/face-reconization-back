@@ -1,6 +1,8 @@
 package deepak.imgae.based.system.image_processing;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -9,8 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/images")
 public class ImageController {
@@ -79,6 +86,44 @@ public class ImageController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    // Endpoint to get all image metadata
+    @GetMapping("/images")
+    public ResponseEntity<?> getAllImages() {
+        List<Image> images = imageService.getAllImages();
+        if (!images.isEmpty()) {
+            return new ResponseEntity<>(images, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @GetMapping("/view")
+    public ResponseEntity<?> getImage(@RequestParam String imagePath) {
+        try {
+            // Construct the path to the image
+            Path path = Paths.get(imagePath);
+            if (!Files.exists(path)) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(null);
+            }
+
+            // Load the image as a resource
+            Resource resource = new UrlResource(path.toUri());
+            if (resource.exists()) {
+                // Return the image with content-disposition to view it inline
+                return ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + path.getFileName().toString() + "\"")
+                        .header(HttpHeaders.CONTENT_TYPE, Files.probeContentType(path)) // Set the content type
+                        .body(resource);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(null);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
         }
     }
 }

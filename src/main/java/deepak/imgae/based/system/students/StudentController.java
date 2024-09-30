@@ -1,5 +1,7 @@
 package deepak.imgae.based.system.students;
 
+import deepak.imgae.based.system.image_processing.ImageDTO;
+import deepak.imgae.based.system.image_processing.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +19,19 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    @Autowired
+    private ImageService imageService;
+
     @PostMapping
-    public ResponseEntity<StudentDTO> createStudent(@RequestBody StudentDTO studentDTO) throws IOException {
-        StudentDTO createdStudent = studentService.createStudent(studentDTO);
-        return new ResponseEntity<>(createdStudent, HttpStatus.CREATED);
+    public ResponseEntity<StudentDTO> createStudent(@ModelAttribute StudentDTO studentDTO) throws IOException {
+        if(studentDTO.getImageFile() != null){
+            ImageDTO imageDTO = imageService.uploadImage(studentDTO.getImageFile());
+            studentDTO.setImagePath(imageDTO.getPath());
+            StudentDTO createdStudent = studentService.createStudent(studentDTO);
+            return new ResponseEntity<>(createdStudent, HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
 
     @PutMapping("/{id}")

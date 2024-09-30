@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -102,4 +103,11 @@ public class ImageServiceImpl implements ImageService {
         Path filePath = Paths.get(path);
         return Files.readAllBytes(filePath);
     }
+
+    // In ImageServiceImpl.java (Implementation)
+    @Override
+    public List<Image> getAllImages() {
+        return imageRepository.findAll(); // Assuming you have a JPA repository for images
+    }
+
 }

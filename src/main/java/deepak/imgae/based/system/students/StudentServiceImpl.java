@@ -29,7 +29,7 @@ public class StudentServiceImpl implements StudentService {
         student.setAddress(studentDTO.getAddress());
         student.setPhoneNumber(studentDTO.getPhoneNumber());
         student.setClassFaculty(studentDTO.getClassFaculty());
-        student.setImage(studentDTO.getImage());
+//        student.setImage(studentDTO.getImage());
         Student updatedStudent = studentRepository.save(student);
         return mapToDTO(updatedStudent);
     }
@@ -63,7 +63,8 @@ public class StudentServiceImpl implements StudentService {
         studentDTO.setAddress(student.getAddress());
         studentDTO.setPhoneNumber(student.getPhoneNumber());
         studentDTO.setClassFaculty(student.getClassFaculty());
-        studentDTO.setImage(student.getImage());
+        studentDTO.setImagePath(student.getImagePath());
+//        studentDTO.setImage(student.getImage());
         return studentDTO;
     }
 
@@ -75,7 +76,8 @@ public class StudentServiceImpl implements StudentService {
         student.setAddress(studentDTO.getAddress());
         student.setPhoneNumber(studentDTO.getPhoneNumber());
         student.setClassFaculty(studentDTO.getClassFaculty());
-        student.setImage(studentDTO.getImage());
+        student.setImagePath(studentDTO.getImagePath());
+//        student.setImage(studentDTO.getImage());
         return student;
     }
 }

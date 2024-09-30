@@ -20,9 +20,7 @@ public class Student {
     private String address;
     private String phoneNumber;
     private String classFaculty;
-
-    @Lob
-    private byte[] image;
+    private String imagePath;
 
     @ManyToMany(mappedBy = "students")
     private Set<Classroom> classrooms = new HashSet<>();

@@ -1,6 +1,7 @@
 package deepak.imgae.based.system.students;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class StudentDTO {
@@ -12,4 +13,6 @@ public class StudentDTO {
     private String phoneNumber;
     private String classFaculty;
     private byte[] image;
+    private String imagePath;
+    private MultipartFile imageFile;
 }

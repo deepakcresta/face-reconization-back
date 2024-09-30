@@ -1,0 +1,275 @@
+@startuml
+interface deepak.imgae.based.system.students.StudentService {
+~ StudentDTO createStudent(StudentDTO)
+~ StudentDTO updateStudent(Long,StudentDTO)
+~ StudentDTO getStudentById(Long)
+~ List<StudentDTO> getAllStudents()
+~ void deleteStudent(Long)
+}
+
+class deepak.imgae.based.system.ImageBaseAttendanceSystemApplication {
++ {static} void main(String[])
+}
+
+class deepak.imgae.based.system.image_processing.ImageServiceImpl {
+- String uploadDir
+- ImageRepository imageRepository
++ ImageDTO uploadImage(MultipartFile)
++ Optional<ImageDTO> getImage(Long)
++ ImageDTO updateImage(Long,MultipartFile)
++ void deleteImage(Long)
++ byte[] loadImageFromFileSystem(String)
+}
+
+
+class deepak.imgae.based.system.students.StudentController {
+- StudentService studentService
++ ResponseEntity<StudentDTO> createStudent(StudentDTO)
++ ResponseEntity<StudentDTO> updateStudent(Long,StudentDTO)
++ ResponseEntity<StudentDTO> getStudentById(Long)
++ List<StudentDTO> getAllStudents()
++ ResponseEntity<Void> deleteStudent(Long)
+}
+
+
+interface deepak.imgae.based.system.teachers.TeacherService {
+~ List<TeacherDto> getAllTeachers()
+~ TeacherDto getTeacherById(Long)
+~ TeacherDto createTeacher(TeacherDto)
+~ TeacherDto updateTeacher(Long,TeacherDto)
+~ void deleteTeacher(Long)
+}
+
+class deepak.imgae.based.system.image_processing.Image {
+- Long id
+- String name
+- String type
+- String path
+}
+
+interface deepak.imgae.based.system.image_processing.ImageRepository {
+}
+class deepak.imgae.based.system.image_processing.ImageController {
+- ImageService imageService
++ ResponseEntity<ImageDTO> uploadImage(MultipartFile)
++ ResponseEntity<ImageDTO> getImageById(Long)
++ ResponseEntity<byte[]> loadImageFileById(Long)
++ ResponseEntity<ImageDTO> updateImage(Long,MultipartFile)
++ ResponseEntity<Void> deleteImage(Long)
+}
+
+
+class deepak.imgae.based.system.user_login_module.UserController {
+- UserService userService
++ List<User> getAllUsers()
++ ResponseEntity<User> getUserById(Long)
++ User createUser(User)
++ ResponseEntity<User> updateUser(Long,User)
++ ResponseEntity<Void> deleteUser(Long)
+}
+
+
+class deepak.imgae.based.system.teachers.TeacherServiceImpl {
+- TeacherRepository teacherRepository
+- ClassroomRepository classroomRepository
++ List<TeacherDto> getAllTeachers()
++ TeacherDto getTeacherById(Long)
++ TeacherDto createTeacher(TeacherDto)
++ TeacherDto updateTeacher(Long,TeacherDto)
++ void deleteTeacher(Long)
+- TeacherDto convertToDTO(Teacher)
+}
+
+
+class deepak.imgae.based.system.students.Student {
+- Long id
+- String name
+- String email
+- String rollNo
+- String address
+- String phoneNumber
+- String classFaculty
+- byte[] image
+- Set<Classroom> classrooms
+}
+
+class deepak.imgae.based.system.user_login_module.UserDto {
+}
+interface deepak.imgae.based.system.classrom.ClassroomService {
+~ List<ClassroomDTO> getClassrooms()
+~ ClassroomDTO getClassroom(Long)
+~ List<ClassroomDTO> getAllClassrooms()
+~ ClassroomDTO getClassroomById(Long)
+~ ClassroomDTO createClassroom(ClassroomDTO)
+~ ClassroomDTO updateClassroom(Long,ClassroomDTO)
+~ void deleteClassroom(Long)
+}
+
+class deepak.imgae.based.system.user_login_module.UserCreateDto {
+}
+interface deepak.imgae.based.system.image_processing.ImageService {
+~ ImageDTO uploadImage(MultipartFile)
+~ Optional<ImageDTO> getImage(Long)
+~ ImageDTO updateImage(Long,MultipartFile)
+~ void deleteImage(Long)
+~ byte[] loadImageFromFileSystem(String)
+}
+
+interface deepak.imgae.based.system.students.StudentRepository {
+}
+interface deepak.imgae.based.system.classrom.ClassroomRepository {
+}
+class deepak.imgae.based.system.image_processing.ImageDTO {
+- Long id
+- String name
+- String type
+- String path
+}
+
+class deepak.imgae.based.system.user_login_module.UserResponseDto {
+}
+class deepak.imgae.based.system.teachers.TeacherDto {
+- Long id
+- String name
+- String email
+- String rollNo
+- String address
+- String phoneNumber
+- String faculty
+- String subject
+- Set<Long> classroomIds
+}
+
+class deepak.imgae.based.system.user_login_module.UserServiceImpl {
+- UserRepository userRepository
++ List<User> getAllUsers()
++ Optional<User> getUserById(Long)
++ User createUser(User)
++ User updateUser(Long,User)
++ void deleteUser(Long)
+}
+
+
+interface deepak.imgae.based.system.user_login_module.UserService {
+~ List<User> getAllUsers()
+~ Optional<User> getUserById(Long)
+~ User createUser(User)
+~ User updateUser(Long,User)
+~ void deleteUser(Long)
+}
+
+class deepak.imgae.based.system.teachers.TeacherController {
+- TeacherService teacherService
++ List<TeacherDto> getAllTeachers()
++ TeacherDto getTeacherById(Long)
++ TeacherDto createTeacher(TeacherDto)
++ TeacherDto updateTeacher(Long,TeacherDto)
++ void deleteTeacher(Long)
+}
+
+
+class deepak.imgae.based.system.classrom.Classroom {
+- Long id
+- String name
+- String faculty
+- String section
+- String classTeacherName
+- Teacher teacher
+- Set<Student> students
+}
+
+class deepak.imgae.based.system.classrom.ClassroomServiceImpl {
+- ClassroomRepository classroomRepository
+- TeacherRepository teacherRepository
+- StudentRepository studentRepository
++ List<ClassroomDTO> getClassrooms()
++ ClassroomDTO getClassroom(Long)
++ List<ClassroomDTO> getAllClassrooms()
++ ClassroomDTO getClassroomById(Long)
++ ClassroomDTO createClassroom(ClassroomDTO)
++ ClassroomDTO updateClassroom(Long,ClassroomDTO)
++ void deleteClassroom(Long)
+- ClassroomDTO convertToDto(Classroom)
+- Classroom convertToEntity(ClassroomDTO)
+}
+
+
+class deepak.imgae.based.system.students.StudentDTO {
+- Long id
+- String name
+- String email
+- String rollNo
+- String address
+- String phoneNumber
+- String classFaculty
+- byte[] image
+}
+
+class deepak.imgae.based.system.teachers.Teacher {
+- Long id
+- String name
+- String email
+- String address
+- String phoneNumber
+- String faculty
+- String subject
+- Set<Classroom> classrooms
+}
+
+class deepak.imgae.based.system.classrom.ClassroomDTO {
+- Long id
+- String name
+- String faculty
+- String section
+- String classTeacherName
+- Long teacherId
+- Set<Long> studentIds
+}
+
+class deepak.imgae.based.system.user_login_module.User {
+- Long id
+- String userName
+- String firstName
+- String lastName
+- String password
+}
+
+class deepak.imgae.based.system.classrom.ClassroomController {
+- ClassroomService classroomService
++ List<ClassroomDTO> getAllClassrooms()
++ ClassroomDTO getClassroomById(Long)
++ ClassroomDTO createClassroom(ClassroomDTO)
++ ClassroomDTO updateClassroom(Long,ClassroomDTO)
++ void deleteClassroom(Long)
+}
+
+
+class deepak.imgae.based.system.students.StudentServiceImpl {
+- StudentRepository studentRepository
++ StudentDTO createStudent(StudentDTO)
++ StudentDTO updateStudent(Long,StudentDTO)
++ StudentDTO getStudentById(Long)
++ List<StudentDTO> getAllStudents()
++ void deleteStudent(Long)
+- StudentDTO mapToDTO(Student)
+- Student mapToEntity(StudentDTO)
+}
+
+
+interface deepak.imgae.based.system.teachers.TeacherRepository {
+}
+interface deepak.imgae.based.system.user_login_module.UserRepository {
+}
+
+
+deepak.imgae.based.system.image_processing.ImageService <|.. deepak.imgae.based.system.image_processing.ImageServiceImpl
+org.springframework.data.jpa.repository.JpaRepository <|-- deepak.imgae.based.system.image_processing.ImageRepository
+deepak.imgae.based.system.teachers.TeacherService <|.. deepak.imgae.based.system.teachers.TeacherServiceImpl
+org.springframework.data.jpa.repository.JpaRepository <|-- deepak.imgae.based.system.students.StudentRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- deepak.imgae.based.system.classrom.ClassroomRepository
+deepak.imgae.based.system.user_login_module.UserService <|.. deepak.imgae.based.system.user_login_module.UserServiceImpl
+deepak.imgae.based.system.classrom.ClassroomService <|.. deepak.imgae.based.system.classrom.ClassroomServiceImpl
+deepak.imgae.based.system.students.StudentService <|.. deepak.imgae.based.system.students.StudentServiceImpl
+org.springframework.data.jpa.repository.JpaRepository <|-- deepak.imgae.based.system.teachers.TeacherRepository
+org.springframework.data.repository.CrudRepository <|-- deepak.imgae.based.system.user_login_module.UserRepository
+@enduml

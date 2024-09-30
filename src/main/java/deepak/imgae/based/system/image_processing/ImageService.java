@@ -2,6 +2,7 @@ package deepak.imgae.based.system.image_processing;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 public interface ImageService {
@@ -15,4 +16,8 @@ public interface ImageService {
     void deleteImage(Long id) throws IOException;
 
     byte[] loadImageFromFileSystem(String path) throws IOException;
+    // In ImageService.java (Interface)
+    public List<Image> getAllImages();
+
+
 }
