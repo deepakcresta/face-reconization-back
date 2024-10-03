@@ -21,4 +21,5 @@ public interface ImageService {
     List<ImageDTO> getAllImages();
 
 
+    boolean updatePresentStatus(Long id);
 }

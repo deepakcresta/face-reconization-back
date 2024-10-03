@@ -1,5 +1,8 @@
 package deepak.imgae.based.system.image_processing;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -142,5 +145,20 @@ public class ImageServiceImpl implements ImageService {
         imageDTO.setType(image.getType());
         imageDTO.setPath(image.getPath());
         return imageDTO;
+    }
+    @Override
+    public boolean updatePresentStatus(Long id) {
+        // Find the image by ID
+        Image image = imageRepository.findById(id).orElse(null);
+
+        // If the image is found, update the presentStatus to true
+        if (image != null) {
+            image.setPresentStatus(true); // Set to true as the requirement states
+            imageRepository.save(image);   // Save the updated image entity
+            return true;                   // Indicate that the update was successful
+        }
+
+        // Return false if the image is not found
+        return false;
     }
 }

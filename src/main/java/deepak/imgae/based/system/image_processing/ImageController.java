@@ -144,5 +144,18 @@ public class ImageController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
             }
         }
+    @PutMapping("/{id}/present-status")
+    public ResponseEntity<String> updatePresentStatus(@PathVariable Long id) {
+        // Call the service to update the present status
+        boolean updated = imageService.updatePresentStatus(id);
+
+        // Return response based on whether the update was successful
+        if (updated) {
+            return ResponseEntity.ok("Present status updated successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Image not found with id " + id);
+        }
+    }
     }
 
