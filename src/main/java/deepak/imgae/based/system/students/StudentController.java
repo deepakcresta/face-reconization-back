@@ -5,11 +5,16 @@ import deepak.imgae.based.system.image_processing.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -24,7 +29,7 @@ public class StudentController {
 
     @PostMapping
     public ResponseEntity<StudentDTO> createStudent(@ModelAttribute StudentDTO studentDTO) throws IOException {
-        if(studentDTO.getImageFile() != null){
+        if (studentDTO.getImageFile() != null) {
             ImageDTO imageDTO = imageService.uploadImage(studentDTO.getImageFile());
             studentDTO.setImagePath(imageDTO.getPath());
             StudentDTO createdStudent = studentService.createStudent(studentDTO);
@@ -55,5 +60,10 @@ public class StudentController {
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    @GetMapping("/ids-and-images")
+    public ResponseEntity<List<StudentDTO>> getAllStudentIdsAndImages() {
+        List<StudentDTO> students = studentService.getAllStudentIdsAndImages();
+        return ResponseEntity.ok(students);
     }
 }

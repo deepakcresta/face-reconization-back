@@ -10,11 +10,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ImageServiceImpl implements ImageService {
 
-    private final String uploadDir = "uploads/images/";
+    private final String uploadDir = "D:/BCA Eight Semester/project/Souce Code/image_base-attendance-system/uploads/images/";
 
     @Autowired
     private ImageRepository imageRepository;
@@ -39,6 +40,7 @@ public class ImageServiceImpl implements ImageService {
         image.setName(fileName);
         image.setType(file.getContentType());
         image.setPath(filePath.toString());
+
 
         Image savedImage = imageRepository.save(image);
 
@@ -104,10 +106,41 @@ public class ImageServiceImpl implements ImageService {
         return Files.readAllBytes(filePath);
     }
 
-    // In ImageServiceImpl.java (Implementation)
     @Override
-    public List<Image> getAllImages() {
-        return imageRepository.findAll(); // Assuming you have a JPA repository for images
+    public List<ImageDTO> getAllImageIdsAndPaths() {
+        return null;
     }
 
+    // In ImageServiceImpl.java (Implementation)
+//    @Override
+//    public List<Image> getAllImages() {
+//        return imageRepository.findAll(); // Assuming you have a JPA repository for images
+//    }
+//    @Override
+//    public List<ImageDTO> getAllImageIdsAndPaths() {
+//        return imageRepository.findAll().stream()
+//                .map(image -> {
+//                    ImageDTO imageDTO = new ImageDTO();
+//                    imageDTO.setId(image.getId()); // Assuming you have an ID in your Image entity
+//                    imageDTO.setPath(image.getPath()); // Assuming you have a path in your Image entity
+//                    return imageDTO;
+//                })
+//                .collect(Collectors.toList());
+//    }
+    public List<ImageDTO> getAllImages() {
+        List<Image> images = imageRepository.findAll();
+        return images.stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+    }
+
+    // Map Image entity to ImageDTO
+    private ImageDTO mapToDTO(Image image) {
+        ImageDTO imageDTO = new ImageDTO();
+        imageDTO.setId(image.getId());
+        imageDTO.setName(image.getName());
+        imageDTO.setType(image.getType());
+        imageDTO.setPath(image.getPath());
+        return imageDTO;
+    }
 }

@@ -89,15 +89,15 @@ public class ImageController {
         }
     }
     // Endpoint to get all image metadata
-    @GetMapping("/images")
-    public ResponseEntity<?> getAllImages() {
-        List<Image> images = imageService.getAllImages();
-        if (!images.isEmpty()) {
-            return new ResponseEntity<>(images, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-    }
+//    @GetMapping("/images")
+//    public ResponseEntity<?> getAllImages() {
+//        List<ImageDTO> images = imageService.getAllImages();
+//        if (!images.isEmpty()) {
+//            return new ResponseEntity<>(images, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+//    }
 
     @GetMapping("/view")
     public ResponseEntity<?> getImage(@RequestParam String imagePath) {
@@ -126,5 +126,23 @@ public class ImageController {
                     .body(null);
         }
     }
-}
+    @GetMapping("/all-ids-and-paths")
+    public ResponseEntity<List<ImageDTO>> getAllImageIdsAndPaths() {
+        List<ImageDTO> images = imageService.getAllImageIdsAndPaths();
+        if (!images.isEmpty()) {
+            return new ResponseEntity<>(images, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+        @GetMapping("/list")
+        public ResponseEntity<List<ImageDTO>> getAllImages() {
+            try {
+                List<ImageDTO> images = imageService.getAllImages();
+                return ResponseEntity.ok(images);
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            }
+        }
+    }
 

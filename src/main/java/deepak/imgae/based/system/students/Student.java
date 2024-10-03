@@ -21,6 +21,7 @@ public class Student {
     private String phoneNumber;
     private String classFaculty;
     private String imagePath;
+    private boolean presentStatus;
 
     @ManyToMany(mappedBy = "students")
     private Set<Classroom> classrooms = new HashSet<>();

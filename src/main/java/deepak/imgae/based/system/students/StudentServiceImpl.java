@@ -80,4 +80,15 @@ public class StudentServiceImpl implements StudentService {
 //        student.setImage(studentDTO.getImage());
         return student;
     }
+
+    @Override
+    public List<StudentDTO> getAllStudentIdsAndImages() {
+        List<Student> students = studentRepository.findAll();
+        return students.stream().map(student -> {
+            StudentDTO studentDTO = new StudentDTO();
+            studentDTO.setId(student.getId());
+            studentDTO.setImagePath(student.getImagePath());
+            return studentDTO;
+        }).collect(Collectors.toList());
+    }
 }

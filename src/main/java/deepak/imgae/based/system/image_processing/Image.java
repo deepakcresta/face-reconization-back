@@ -23,4 +23,5 @@ public class Image {
     private String type; // MIME type
 
     private String path; // File path where the image is saved
+    private boolean presentStatus;
 }

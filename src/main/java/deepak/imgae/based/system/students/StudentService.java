@@ -9,4 +9,6 @@ public interface StudentService {
     List<StudentDTO> getAllStudents();
     void deleteStudent(Long id);
 
+    List<StudentDTO> getAllStudentIdsAndImages();
+
 }

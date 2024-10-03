@@ -15,4 +15,5 @@ public class StudentDTO {
     private byte[] image;
     private String imagePath;
     private MultipartFile imageFile;
+    private boolean presentStatus;
 }

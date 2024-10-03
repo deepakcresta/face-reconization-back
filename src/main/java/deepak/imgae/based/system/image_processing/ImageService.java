@@ -17,7 +17,8 @@ public interface ImageService {
 
     byte[] loadImageFromFileSystem(String path) throws IOException;
     // In ImageService.java (Interface)
-    public List<Image> getAllImages();
+    List<ImageDTO> getAllImageIdsAndPaths();
+    List<ImageDTO> getAllImages();
 
 
 }

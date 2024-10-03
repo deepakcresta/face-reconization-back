@@ -11,4 +11,8 @@ public class ImageDTO {
     private String name;
     private String type;
     private String path;
+    private boolean presentStatus;
+
+    public ImageDTO(Long id, String name, String type, String path) {
+    }
 }
